@@ -2,6 +2,8 @@ package com.reguse.cursomc.resources;
 
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reguse.cursomc.domain.Categoria;
 import com.reguse.cursomc.services.CategoriaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -21,12 +25,13 @@ public class CategoriaResource {
 	
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		
-		Categoria obj = service.buscas(id);
+		Optional<Categoria> obj = service.buscas(id);
 		return ResponseEntity.ok().body(obj);
 		
 		
 	}
 
 }
+
